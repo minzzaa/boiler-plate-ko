@@ -1,6 +1,6 @@
 const express = require('express')  // express 모드를 가져오고 
 const app = express()   // express 를 만들고
-const port = 5000
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -10,6 +10,7 @@ const { User } = require("./models/User");
 
 const { auth } = require('./middleware/auth');
 
+const port = 5000
 //application/x-www-form-urlencoded 로 된 데이터를 분석해서 가져올 수 있게 해줌
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 app.use(cookieParser());
+
 
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI, {
@@ -26,6 +28,11 @@ mongoose.connect(config.mongoURI, {
 
 app.get('/', (req, res) => {
   res.send('새해복')
+})
+
+
+app.get('/api/hello', (req,res) => {
+  res.send("안녕하세요");
 })
 
 app.post('/api/users/register', (req, res) => {
@@ -71,7 +78,6 @@ app.post('/api/users/login', (req, res) => {
     })
   })
 })
-
 
 
 app.listen(port, () => {
